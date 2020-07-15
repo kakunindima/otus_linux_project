@@ -1,0 +1,50 @@
+version: "3.2"
+services:
+  jira-node{{ id }}:
+    image: atlassian/jira-software:8.4.0
+    container_name: jira-node{{ id }}
+    environment:
+      # Memory / Heap Size
+      - JVM_MINIMUM_MEMORY=512M
+      - JVM_MAXIMUM_MEMORY=1024M
+      # Reverse Proxy Settings
+      - ATL_PROXY_NAME=10.0.0.10
+      #- ATL_PROXY_PORT=1840
+      # Database
+      - ATL_JDBC_URL=jdbc:postgresql://10.0.0.20:5432/jira_cluster_db
+      - ATL_JDBC_USER=postgres
+      - ATL_JDBC_PASSWORD=postgres
+      - ATL_DB_DRIVER=org.postgresql.Driver
+      - ATL_DB_TYPE=postgres72
+      # Data Center configuration
+      - CLUSTERED=true
+      - JIRA_NODE_ID=jira-node{{ id }}
+      - EHCACHE_LISTENER_HOSTNAME=jira-node{{ id }}
+      - EHCACHE_LISTENER_PORT=40001
+      - EHCACHE_OBJECT_PORT=40011
+      - EHCACHE_PEER_DISCOVERY=default
+      - EHCACHE_MULTICAST_ADDRESS=10.0.0.0/24
+      - EHCACHE_MULTICAST_PORT=4446
+      - EHCACHE_MULTICAST_TIMETOLIVE=32
+      - EHCACHE_MULTICAST_HOSTNAME=jira-node{{ id }}
+      # Home Directories
+      - JIRA_HOME=/opt/jira-home
+      - JIRA_SHARED_HOME=/opt/jira-home-shared
+    ports:
+#      - 1840:1840
+      - 8080:8080
+    volumes:
+      - type: bind
+        source: /srv/share/jira_cluster/jira-home-node{{ id }}
+        target: /opt/jira-home
+      - type: bind
+        source: /srv/share/jira_cluster/jira-home-shared
+        target: /opt/jira-home-shared
+    networks:
+      jira-software-cluster-network:
+        aliases:
+          - jira-node{{ id }}
+
+networks:
+  jira-software-cluster-network:
+    driver: bridge

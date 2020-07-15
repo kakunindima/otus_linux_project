@@ -1,0 +1,15 @@
+---
+# handlers file for journald_srv
+- name: journald restart
+  service: name=systemd-journal-remote state=restarted
+
+- name: journald enable
+  service: name=systemd-journal-remote state=started enabled=yes
+  notify: journald start
+
+- name: journald start
+  service: name=systemd-journald state=started enabled=yes
+
+- name: journald-remote start
+  service: name=systemd-journal-remote state=started enabled=yes
+

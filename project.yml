@@ -1,0 +1,68 @@
+---
+- hosts: 
+    - jiras
+    - dbs
+    - stors
+  become: True
+  roles:
+    - journald_cli
+
+- hosts: jiras
+  become: True
+  roles:
+    - docker
+
+- hosts: 
+    - jiralb1
+    - jiralb2
+  become: True
+  roles:
+    - keepalived_jiralb
+    - jiralb
+
+- hosts: 
+    - jira1
+    - jira2
+  become: True
+  roles:
+#    - glusterfs_cli
+    - jira
+
+- hosts: stors
+  become: True
+  roles:
+    - keepalived_stor
+    - glusterfs-volume
+#    - smb
+
+- hosts:
+    - db1
+    - db2
+    - db3
+  become: True
+  roles:
+    - patroni
+    - db_jira_cluster
+
+- hosts:
+  - consul1
+  - consul2
+  become: True
+  roles:
+    - keepalived
+    - haproxy
+    - pgbouncer
+
+- hosts:
+  - consul1
+  - consul2
+  - consul3
+  become: True
+  roles:
+    - consul
+
+- hosts: bml
+  become: True
+  roles:
+    - journald_srv
+    - monitoring

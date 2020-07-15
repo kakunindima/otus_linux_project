@@ -1,0 +1,10 @@
+Description=jiralb
+#After=network.target
+#After=docker.service
+
+[Service]
+ExecStart=/usr/local/bin/docker-compose -f /opt/jira/docker-compose.yml up 
+ExecStop=/usr/local/bin/docker-compose -f /opt/jira/docker-compose.yml stop
+
+[Install]
+WantedBy=multi-user.target

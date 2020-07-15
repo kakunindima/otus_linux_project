@@ -1,0 +1,19 @@
+version: "3.2"
+services:
+  jira-cluster-840-lb:
+    image: pengwinn/loadbalancer
+    container_name: jira-cluster-lb
+    ports:
+      - 80:1080
+    environment:
+      - NODES=2
+      - NODES_NAME_SCHEMA=jira-cluster-840-node___NUM___
+    networks:
+      jira-software-cluster-network-840:
+        aliases:
+          - jira-cluster-840-lb
+
+networks:
+  jira-software-cluster-network-840:
+    driver: bridge
+

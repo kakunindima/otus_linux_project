@@ -1,0 +1,9 @@
+[Unit]
+Description=Journal upload start
+
+
+[Service]
+ExecStart=/opt/jrnl_u_start.sh
+
+[Install]
+WantedBy=multi-user.target

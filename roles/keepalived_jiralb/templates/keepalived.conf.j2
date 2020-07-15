@@ -1,0 +1,10 @@
+vrrp_instance VI_1 {
+interface eth1
+state {{ state }}
+virtual_router_id 50
+priority {{ prio }}
+
+virtual_ipaddress {
+10.0.0.10
+}
+}

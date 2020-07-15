@@ -1,0 +1,9 @@
+Description=jiralb
+#After=network.target
+#After=docker.service
+
+[Service]
+ExecStart=/opt/mount_glfs.sh 
+
+[Install]
+WantedBy=multi-user.target

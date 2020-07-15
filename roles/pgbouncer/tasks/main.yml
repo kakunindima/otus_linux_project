@@ -1,0 +1,37 @@
+---
+# tasks file for pgbouncer
+- name: install epel-release
+  yum:
+    name: epel-release
+    state: present
+
+- name: install pgbouncer
+  yum:
+    name: pgbouncer
+    state: present
+
+- name: copy pgbouncer config
+  copy:
+    src: pgbouncer.ini
+    dest: /etc/pgbouncer/pgbouncer.ini
+
+- name: create auth dirr
+  file:
+    state: directory
+    path: /opt/jira/
+
+- name: create log dirr
+  file:
+    state: directory
+    path: /var/log/pgbouncer/
+
+- name: copy pgbouncer auth.txt
+  copy:
+    src: auth.txt
+    dest: /opt/jira/auth.txt
+
+- name: start pgbouncer service
+  systemd:
+    name: pgbouncer
+    state: started
+    enabled: yes

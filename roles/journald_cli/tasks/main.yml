@@ -1,0 +1,50 @@
+---
+# tasks file for journald_cli
+- name: Configure Journald
+  block:
+    - name: Install journald
+      yum:
+        name: systemd-journal-gateway
+        state: present
+      notify: journald_upload start
+
+    - name: copy configs
+      template:
+        src: journald.conf.j2
+        dest: /etc/systemd/journald.conf
+#      notify: journald start
+
+    - name: copy configs
+      template:
+        src: journal-upload.conf.j2
+        dest: /etc/systemd/journal-upload.conf
+#      notify: journald_upload start
+
+- name: journald start
+  systemd:
+    name: systemd-journald
+    state: started
+    enabled: yes
+
+- name: journal-upload start
+  systemd:
+    name: systemd-journal-upload
+    state: started
+    enabled: yes
+
+- name: copy script
+  copy: 
+    src: jrnl_u_start.sh
+    dest: /opt/jrnl_u_start.sh
+    mode: a+x
+
+- name: copy service
+  copy: 
+    src: jrnl_u_start.service
+    dest: /etc/systemd/system/jrnl_u_start.service
+
+- name: jrnl_u start
+  systemd:
+    name: jrnl_u_start
+    state: started
+    enabled: yes

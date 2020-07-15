@@ -1,0 +1,119 @@
+---
+# tasks file for glusterfs-volume
+- name: add jira user
+  user:
+    name: jira
+
+- name: install epel
+  yum:
+    name: epel-release
+    state: present
+
+- name: install centos-release-gluster
+  yum:
+    name: centos-release-gluster
+    state: present
+
+- name: install glusterfs-server
+  yum: 
+    name: glusterfs-server
+    state: present
+
+- name: enable sevice
+  systemd:
+    name: glusterd
+    state: started
+    enabled: yes
+
+- name: add dns names to hosts
+  lineinfile:
+    path: /etc/hosts
+    line: 10.0.0.31 stor1
+    state: present
+
+- name: add dns names to hosts
+  lineinfile:
+    path: /etc/hosts
+    line: 10.0.0.32 stor2
+    state: present
+
+- name: add dns names to hosts
+  lineinfile:
+    path: /etc/hosts
+    line: 10.0.0.30 stor
+    state: present
+
+- name: create dirr 
+  file:
+    state: directory
+    path: /srv/share/jira_cluster
+    owner: jira
+    group: jira
+    mode: 0755
+
+- name: configure glfs_vol
+  block:
+  - name: add peers
+    shell: gluster peer probe stor && gluster peer probe stor1 && gluster peer probe stor2
+
+#  - name: create volume
+#    shell: gluster volume create jira_cluster replica 2 stor:/srv/share/jira_cluster stor2:/srv/share/jira_cluster
+
+  - name: create volume
+    gluster_volume:
+      state: present
+      name: jira_cluster
+      bricks: /srv/share/jira_cluster
+      replicas: 2
+      cluster:
+        - stor1
+        - stor2
+      force: true
+    run_once: true
+
+#  - name: start volume
+#    shell: gluster volume start jira_cluster
+
+#  - name: sent nfs on
+#    shell: gluster volume set jira_cluster nfs.disable off
+  when: inventory_hostname == "stor2"
+
+- name: configure folders
+  block:
+  - name: create folder for jira_cluster
+    file:
+      state: directory
+      path: /srv/share/jira_cluster/jira-home-node1
+      owner: jira
+      group: jira
+      mode: 0755
+
+  - name: create folder for jira_cluster
+    file:
+      state: directory
+      path: /srv/share/jira_cluster/jira-home-node2
+      owner: jira
+      group: jira
+      mode: 0755
+
+  - name: create folder for jira_cluster
+    file:
+      state: directory
+      path: /srv/share/jira_cluster/jira-home-shared
+      owner: jira
+      group: jira
+      mode: 0755
+
+  - name: copy files
+    shell: cp -R -u -p /vagrant/matherials/jira-home-node1/* /srv/share/jira_cluster/jira-home-node1/
+
+  - name: copy files
+    shell: cp -R -u -p /vagrant/matherials/jira-home-node2/* /srv/share/jira_cluster/jira-home-node2/
+
+  - name: copy files
+    shell: cp -R -u -p /vagrant/matherials/jira-home-shared/* /srv/share/jira_cluster/jira-home-shared/
+
+  - name: chmod files
+    shell: sudo chmod -R jira:jira /srv/share/jira_cluster/*
+
+  when: inventory_hostname == "stor2"

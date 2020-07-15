@@ -1,0 +1,35 @@
+---
+# tasks file for keepallived
+- name: include vars
+  block:
+  - name: consul1
+    include_vars: consul1.yml
+    when: inventory_hostname == "consul1"
+
+  - name: consul2
+    include_vars: consul2.yml
+    when: inventory_hostname == "consul2"
+
+- name: install keepalived
+  yum:
+    name: keepalived
+    state: present
+
+- name: copy keepalived.conf
+  template:
+    src: keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+
+- name: copy sysctl.conf
+  copy:
+    src: sysctl.conf
+    dest: /etc/sysctl.conf
+
+- name: read sysctl.conf
+  shell: sysctl -p
+
+- name: start keepalived
+  systemd:
+    name: keepalived
+    enabled: yes
+    state: started

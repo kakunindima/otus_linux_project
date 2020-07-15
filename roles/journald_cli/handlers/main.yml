@@ -1,0 +1,10 @@
+---
+# handlers file for journald_cli
+- name: journald_upload restart
+  service: name=systemd-journal-upload state=restarted
+
+- name: journald_upload start
+  service: name=systemd-journal-upload state=started enabled=yes
+
+- name: journald start
+  service: name=systemd-journald state=started enabled=yes

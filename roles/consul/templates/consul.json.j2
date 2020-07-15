@@ -1,0 +1,32 @@
+{
+    "advertise_addr": "{{ node_ip}}",
+    "node_name": "{{ nodename }}",
+    "bind_addr": "{{ node_ip }}",
+    "bootstrap_expect": 3,
+    "client_addr": "0.0.0.0",
+    "datacenter": "project_consul",
+    "data_dir": "/opt/consul",
+    "domain": "consul",
+    "enable_script_checks": true,
+    "dns_config": {
+        "enable_truncate": true,
+        "only_passing": true
+    },
+    "enable_syslog": true,
+    "encrypt": "bnRHLmJ6TeLomirgEOWP2g==",
+    "leave_on_terminate": true,
+    "log_level": "INFO",
+    "rejoin_after_leave": true,
+    "retry_join": [
+     "10.0.0.25",
+     "10.0.0.26",
+     "10.0.0.27"
+    ],
+    "server": true,
+    "start_join": [
+     "10.0.0.25",
+     "10.0.0.26",
+     "10.0.0.27"
+    ],
+    "ui": true
+}

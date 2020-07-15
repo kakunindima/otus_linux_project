@@ -1,0 +1,56 @@
+all:
+  project:
+
+project:
+  hosts:
+  children:
+    jiras:
+      hosts:
+        jiralb1:
+          ansible_host: 10.0.0.4
+          ansible_ssh_private_key_file: .vagrant/machines/jiralb1/virtualbox/private_key
+        jiralb2:
+          ansible_host: 10.0.0.5
+          ansible_ssh_private_key_file: .vagrant/machines/jiralb2/virtualbox/private_key
+        jira1:
+          ansible_host: 10.0.0.11
+          ansible_ssh_private_key_file: .vagrant/machines/jira1/virtualbox/private_key
+        jira2:
+          ansible_host: 10.0.0.12
+          ansible_ssh_private_key_file: .vagrant/machines/jira2/virtualbox/private_key
+        jira3:
+          ansible_host: 10.0.0.13
+          ansible_ssh_private_key_file: .vagrant/machines/jira3/virtualbox/private_key
+    dbs:
+      hosts:
+        consul1:
+          ansible_host: 10.0.0.25
+          ansible_ssh_private_key_file: .vagrant/machines/consul1/virtualbox/private_key
+        consul2:
+          ansible_host: 10.0.0.26
+          ansible_ssh_private_key_file: .vagrant/machines/consul2/virtualbox/private_key
+        consul3:
+          ansible_host: 10.0.0.27
+          ansible_ssh_private_key_file: .vagrant/machines/consul3/virtualbox/private_key
+        db1:
+          ansible_host: 10.0.0.21
+          ansible_ssh_private_key_file: .vagrant/machines/db1/virtualbox/private_key
+        db2:
+          ansible_host: 10.0.0.22
+          ansible_ssh_private_key_file: .vagrant/machines/db2/virtualbox/private_key
+        db3:
+          ansible_host: 10.0.0.23
+          ansible_ssh_private_key_file: .vagrant/machines/db3/virtualbox/private_key
+    stors:
+      hosts:
+        stor1:
+          ansible_host: 10.0.0.31
+          ansible_ssh_private_key_file: .vagrant/machines/stor1/virtualbox/private_key
+        stor2:
+          ansible_host: 10.0.0.32
+          ansible_ssh_private_key_file: .vagrant/machines/stor2/virtualbox/private_key
+    upr:
+      hosts:
+        bml:
+          ansible_host: 10.0.0.40
+          ansible_ssh_private_key_file: .vagrant/machines/bml/virtualbox/private_key

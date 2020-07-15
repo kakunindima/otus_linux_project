@@ -1,0 +1,11 @@
+[Unit]
+Description=jira
+After=network.target
+Requires=docker.service
+
+[Service]
+ExecStart=docker-compose -f /opt/jira/docker-compose.yml up -d
+ExecStop=docker-compose -f /opt/jira/docker-compose.yml stop
+
+[Install]
+WantedBy=multi-user.target 

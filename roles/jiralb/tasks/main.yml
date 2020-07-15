@@ -1,0 +1,24 @@
+---
+# tasks file for jiralb
+- name: create /opt/jiralb
+  file:
+    state: directory
+    path: /opt/jiralb
+
+- name: copy loadbalancer docker-compose file
+  copy:
+    src: docker-compose.yml
+    dest: /opt/jiralb
+
+- name: copy jiralb.service
+  copy:
+    src: jiralb.service
+    dest: /etc/systemd/system/jiralb.service
+
+- name: start jiralb.service
+  systemd:
+    name: jiralb
+    state: started
+    enabled: yes
+#- name: start docker-compose
+#  shell: docker-compose -f /opt/jiralb/docker-compose.yml up -d

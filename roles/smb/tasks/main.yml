@@ -1,0 +1,101 @@
+---
+# tasks file for smb
+- name: create user jira
+  user:
+    name: jira
+
+- name: configure share
+  block:
+    - name: create folder for jira_cluster
+      file:
+        state: directory
+        path: /srv/share/jira_cluster/jira-home-node1
+        owner: jira
+        group: jira
+        mode: 0777
+
+    - name: create folder for jira_cluster
+      file:
+        state: directory
+        path: /srv/share/jira_cluster/jira-home-node2
+        owner: jira
+        group: jira
+        mode: 0777
+
+    - name: create folder for jira_cluster
+      file:
+        state: directory
+        path: /srv/share/jira_cluster/jira-home-shared
+        owner: jira
+        group: jira
+        mode: 0777
+    - name: install samba
+      yum:
+        name: samba
+        state: present
+
+    - name: copy smb.conf
+      copy:
+        src: smb.conf
+        dest: /etc/samba/smb.conf
+
+    - name: enable & start smbd
+      systemd:
+        name: smb
+        state: started
+        enabled: True
+
+    - name: enable & start nmbd
+      systemd:
+        name: nmb
+        state: started
+        enabled: True
+
+    - name: add jira to share
+      shell: (echo "1"; echo "1") | smbpasswd -s -a jira
+
+    - name: restart smbd
+      systemd:
+        name: smb
+        state: restarted
+
+    - name: restart nmbd
+      systemd:
+        name: nmb
+        state: restarted
+
+#- name: copy jira1 files
+#  copy:
+#    src: jira-home-node1/
+#    dest: /srv/share/jira_cluster/jira-home-node1
+#    owner: jira
+#    group: jira
+#    mode: 0777
+
+#- name: copy jira2 files
+ # copy:
+#    src: jira-home-node2/
+#    dest: /srv/share/jira_cluster/jira-home-node2
+#    owner: jira
+#    group: jira
+#    mode: 0777
+
+#- name: copy jira shared files
+#  copy:
+#    src: jira-home-shared/
+#    dest: /srv/share/jira_cluster/jira-home-shared
+#    owner: jira
+#    group: jira
+#    mode: 0777
+
+- name: copy files
+  shell: cp -R -u -p /vagrant/matherials/jira-home-node1/* /srv/share/jira_cluster/jira-home-node1/
+
+- name: copy files
+  shell: cp -R -u -p /vagrant/matherials/jira-home-node2/* /srv/share/jira_cluster/jira-home-node2/
+
+- name: copy files
+  shell: cp -R -u -p /vagrant/matherials/jira-home-shared/* /srv/share/jira_cluster/jira-home-shared/
+
+- name: disable selinux
+  shell: setenforce 0

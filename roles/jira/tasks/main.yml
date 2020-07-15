@@ -1,0 +1,99 @@
+---
+# tasks file for jira
+- name:
+  include_vars: jira1.yml
+  when: inventory_hostname == "jira1"
+
+- name:
+  include_vars: jira2.yml
+  when: inventory_hostname == "jira2"
+
+- name: create glusterfs jira_cluster folder
+  block:
+    - name: install glusterfs-fuse
+      yum:
+        name: glusterfs-fuse
+        state: present
+
+    - name: hosts item
+      lineinfile:
+        path: /etc/hosts
+        line: 10.0.0.30 stor
+        state: present
+    
+    - name: hosts item
+      lineinfile:
+        path: /etc/hosts
+        line: 10.0.0.31 stor1
+        state: present
+
+    - name: hosts item
+      lineinfile:
+        path: /etc/hosts
+        line: 10.0.0.32 stor2
+        state: present
+
+    - name: fstab item
+      lineinfile:
+        path: /etc/fstab
+        line: stor:/jira_cluster /srv/share/jira_cluster/  glusterfs   _netdev 0 0 #//10.0.0.31/jira_cluster /srv/share/jira_cluster cifs username=jira,password=1,uid=0,gid=0,nounix,file_mode=0777,dir_mode=0777 0 0
+        state: present
+
+    - name: add user jira
+      user:
+        name: jira
+
+    - name: create folder for mount
+      file:
+        path: /srv/share/jira_cluster
+        state: directory
+        owner: jira
+        group: jira
+        mode: 0777
+
+#    - name: mount folder
+#      shell: mount -a
+
+    - name: copy script
+      copy: 
+        src: mount_glfs.sh
+        dest: /opt/mount_glfs.sh
+        mode: a+x
+
+    - name: copy service
+      copy: 
+        src: mount_glfs.service
+        dest: /etc/systemd/system/mount_glfs.service
+
+    - name: mount_glfs start
+      systemd:
+        name: mount_glsfs
+        state: started
+        enabled: yes
+
+- name: configure jira-docker
+  block:
+    - name: create dirr for docker-jira configs
+      file:
+        path: /opt/jira
+        state: directory
+        mode: 0755
+
+    - name: copy docker-compose file
+      template:
+        src: docker-compose.yml.j2
+        dest: /opt/jira/docker-compose.yml
+
+- name: copy jira.service
+  copy:
+    src: jira.service
+    dest: /etc/systemd/system/jira.service
+
+- name: start jira
+  systemd:
+    name: jira
+    state: started
+    enabled: yes
+
+#    - name: run docker-compose jira
+#      shell: docker-compose -f /opt/jira/docker-compose.yml up -d 

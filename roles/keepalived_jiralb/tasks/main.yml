@@ -1,0 +1,35 @@
+---
+# tasks file for keepallived
+- name: include vars
+  block:
+  - name: jiralb1
+    include_vars: jiralb1.yml
+    when: inventory_hostname == "jiralb1"
+
+  - name: jiralb2
+    include_vars: jiralb2.yml
+    when: inventory_hostname == "jiralb2"
+
+- name: install keepalived
+  yum:
+    name: keepalived
+    state: present
+
+- name: copy keepalived.conf
+  template:
+    src: keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+
+- name: copy sysctl.conf
+  copy:
+    src: sysctl.conf
+    dest: /etc/sysctl.conf
+
+- name: read sysctl.conf
+  shell: sysctl -p
+
+- name: start keepalived
+  systemd:
+    name: keepalived
+    enabled: yes
+    state: started
