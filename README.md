@@ -6,7 +6,7 @@ __Проект построен на основе полученных во вр
 
 __За основу взята официальная документация [https://developer.atlassian.com/server/jira/platform/developing-for-high-availability-and-clustering/](https://developer.atlassian.com/server/jira/platform/developing-for-high-availability-and-clustering/)__
 
-__Концепция построения: Отказоустойчивость и высокая доступность сисемы__
+__Концепция построения: Отказоустойчивость и высокая доступность системы__
 
 ### Схема кластера
 
