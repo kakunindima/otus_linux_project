@@ -113,7 +113,7 @@
   - name: copy files
     shell: cp -R -u -p /vagrant/matherials/jira-home-shared/* /srv/share/jira_cluster/jira-home-shared/
 
-  - name: chmod files
-    shell: sudo chmod -R jira:jira /srv/share/jira_cluster/*
+  - name: chown files
+    shell: sudo chown -R jira:jira /srv/share/jira_cluster/*
 
   when: inventory_hostname == "stor2"

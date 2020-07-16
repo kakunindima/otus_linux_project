@@ -62,12 +62,12 @@
 
     - name: copy service
       copy: 
-        src: mount_glfs.service
-        dest: /etc/systemd/system/mount_glfs.service
+        src: mount_glusterfs.service
+        dest: /etc/systemd/system/mount_glusterfs.service
 
     - name: mount_glfs start
       systemd:
-        name: mount_glsfs
+        name: mount_glusterfs
         state: started
         enabled: yes
 
