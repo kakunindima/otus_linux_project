@@ -10,7 +10,7 @@ __Концепция построения: Отказоустойчивость 
 
 ### Схема кластера
 
-![img](https://github.com/kakunindima/otus_linux_project/tree/master/img/project_2.png)
+![img](https://github.com/kakunindima/otus_linux_project/blob/master/img/project_2.png)
 
 __Кластер состоит из 13 нод которые можно сгруппировать по типу__
 
