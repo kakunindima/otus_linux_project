@@ -1,0 +1,3 @@
+---
+Repo: Consul2
+target: /etc/consul.d /etc/pgbouncer

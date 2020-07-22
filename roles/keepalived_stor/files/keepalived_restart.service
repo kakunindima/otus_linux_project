@@ -1,0 +1,9 @@
+[Unit]
+After=syslog.target network-online.target
+
+[Service]
+ExecStart=/opt/keepalived_restart.sh
+
+
+[Install]
+WantedBy=multi-user.target

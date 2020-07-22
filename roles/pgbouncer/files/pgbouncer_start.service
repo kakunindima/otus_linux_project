@@ -1,0 +1,9 @@
+[Unit]
+Description=pgbouncer start
+
+
+[Service]
+ExecStart=/opt/pgbouncer_start.sh
+
+[Install]
+WantedBy=multi-user.target

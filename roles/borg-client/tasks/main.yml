@@ -1,0 +1,111 @@
+---
+# tasks file for borg-client
+- name: include vars
+  block:
+    - name: jiralb1
+      include_vars: jiralb1.yml
+      when: inventory_hostname == 'jiralb1'
+
+    - name: jiralb2
+      include_vars: jiralb2.yml
+      when: inventory_hostname == 'jiralb2'
+
+    - name: jira1
+      include_vars: jira1.yml
+      when: inventory_hostname == 'jira1'
+
+    - name: jira2
+      include_vars: jira2.yml
+      when: inventory_hostname == 'jira2'
+
+    - name: stor1
+      include_vars: stor1.yml
+      when: inventory_hostname == 'stor1'
+
+    - name: stor2
+      include_vars: stor2.yml
+      when: inventory_hostname == 'stor2'
+
+    - name: consul1
+      include_vars: consul1.yml
+      when: inventory_hostname == 'consul1'
+
+    - name: consul2
+      include_vars: consul2.yml
+      when: inventory_hostname == 'consul2'
+
+    - name: consul3
+      include_vars: consul3.yml
+      when: inventory_hostname == 'consul3'
+
+    - name: db1
+      include_vars: db1.yml
+      when: inventory_hostname == 'db1'
+
+    - name: db2
+      include_vars: db2.yml
+      when: inventory_hostname == 'db2'
+
+    - name: db3
+      include_vars: db3.yml
+      when: inventory_hostname == 'db3'
+
+- name: add user borg
+  user:
+    name: borg
+    create_home: True
+
+- name: copy ssh keys
+  copy:
+    src: files/ssh/{{ item }}
+    dest: /home/borg/.ssh/
+    mode: 0600
+    owner: borg
+    group: borg
+  with_items:
+    - id_rsa
+    - id_rsa.pub
+    - config
+
+- name: copy sshd_conf
+  copy:
+    src: ssh_config
+    dest: /etc/ssh/ssh_config
+  notify: restart sshd
+
+- name: add hosts line
+  lineinfile:
+    line: 10.0.0.40 bml
+    path: /etc/hosts
+
+- name: install borg
+  get_url:
+    url: https://github.com/borgbackup/borg/releases/download/1.1.6/borg-linux64
+    dest: /usr/bin/borg
+    mode: a+x
+
+- name: create log dirr for usr borg
+  file:
+    state: directory
+    path: /vaar/log/borg
+    owner: borg
+    group: borg
+
+- name: create repo
+  shell: borg init -e none borg@bml:{{ Repo }}
+  become: True
+  become_user: borg
+  ignore_errors: True
+
+- name: copy backup script
+  template:
+    src: backup.sh
+    dest: /opt/backup.sh
+    mode: a+x
+    owner: borg
+    group: borg
+
+- name: copy cron backup task
+  copy:
+    src: crontab
+    dest: /etc/crontab

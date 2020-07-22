@@ -1,4 +1,9 @@
 ---
+- hosts: project
+  become: True
+  roles:
+    - ntp
+
 - hosts: 
     - jiras
     - dbs
@@ -6,6 +11,7 @@
   become: True
   roles:
     - journald_cli
+    - borg-client
 
 - hosts: jiras
   become: True
@@ -66,3 +72,4 @@
   roles:
     - journald_srv
     - monitoring
+    - borg-server

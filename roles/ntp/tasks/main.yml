@@ -1,0 +1,22 @@
+---
+# tasks file for ntp
+- name: install ntp
+  yum:
+    name: ntp
+    state: present
+
+- name: install ntpdate
+  yum:
+    name: ntpdate
+    state: present
+
+- name: copy ntp conf
+  copy:
+    src: ntp.conf
+    dest: /etc/ntp.conf
+
+- name: edit zoneinfo
+  shell: yes | rm /etc/localtime && ln -s /usr/share/zoneinfo/Europe/Kiev /etc/localtime
+
+- name: synchronize time
+  shell: ntpdate 0.pool.ntp.org

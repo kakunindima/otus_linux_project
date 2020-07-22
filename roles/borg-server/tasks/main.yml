@@ -1,0 +1,24 @@
+---
+# tasks file for borg-server
+- name: get borg release
+  get_url:
+    url: https://github.com/borgbackup/borg/releases/download/1.1.6/borg-linux64
+    dest: /usr/local/bin/borg
+    mode: a+x
+
+- name: add user borg
+  user:
+    name: borg
+    create_home: True
+
+- name: copy ssh keys
+  copy:
+    src: files/ssh/{{ item }}
+    dest: /home/borg/.ssh/
+    mode: 0600
+    owner: borg
+    group: borg
+  with_items:
+    - id_rsa
+    - id_rsa.pub
+    - authorized_keys

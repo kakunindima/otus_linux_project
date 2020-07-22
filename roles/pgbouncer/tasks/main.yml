@@ -30,8 +30,25 @@
     src: auth.txt
     dest: /opt/jira/auth.txt
 
-- name: start pgbouncer service
+
+#- name: start pgbouncer service
+#  systemd:
+#    name: pgbouncer
+#    enabled: yes
+
+- name: copy journal_r_start.sh
+  copy:
+    src: pgbouncer_start.sh
+    dest: /opt/pgbouncer_start.sh
+    mode: a+x
+
+- name: copy service
+  copy:
+    src: pgbouncer_start.service
+    dest: /etc/systemd/system/pgbouncer_start.service
+
+- name: enable & start service
   systemd:
-    name: pgbouncer
     state: started
     enabled: yes
+    name: pgbouncer_start
