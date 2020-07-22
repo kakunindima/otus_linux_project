@@ -1,0 +1,56 @@
+---
+# tasks file for nagios
+- name: install nagios
+  yum:
+    name:
+      - nagios
+      - nagios-nrpe
+    state: present
+- name: install plugins
+  shell: yum install -y nagios-plugins-*
+- name: copy nagios.cfg
+  copy:
+    src: nagios.cfg
+    dest: /etc/nagios/nagios.cfg
+
+- name: copy nagios.cfg
+  copy:
+    src: localhost.cfg
+    dest: /etc/nagios/objects/localhost.cfg
+
+- name: copy passwd for nagiosadmin
+  copy:
+    src: passwd
+    dest: /etc/nagios/passwd
+
+- name: create dirr for configs
+  file:
+    state: directory
+    path: /etc/nagios/servers
+
+- name: create dirr for configs
+  file:
+    state: directory
+    path: /etc/nagios/services
+
+- name: copy configs for servers
+  copy:
+    src: servers/
+    dest: /etc/nagios/servers/
+
+- name: copy configs for services
+  copy:
+    src: services/
+    dest: /etc/nagios/services/
+
+- name: start service
+  systemd:
+    name: nagios
+    state: started
+    enabled: yes
+
+- name: start httpd
+  systemd:
+    name: httpd
+    state: started
+    enabled: yes
