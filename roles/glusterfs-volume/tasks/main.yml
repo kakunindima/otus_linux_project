@@ -105,13 +105,13 @@
       mode: 0755
 
   - name: copy files
-    shell: cp -R -u -p /vagrant/matherials/jira-home-node1/* /srv/share/jira_cluster/jira-home-node1/
+    shell: cp -R -u -p /vagrant/data/jira-home-node1/* /srv/share/jira_cluster/jira-home-node1/
 
   - name: copy files
-    shell: cp -R -u -p /vagrant/matherials/jira-home-node2/* /srv/share/jira_cluster/jira-home-node2/
+    shell: cp -R -u -p /vagrant/data/jira-home-node2/* /srv/share/jira_cluster/jira-home-node2/
 
   - name: copy files
-    shell: cp -R -u -p /vagrant/matherials/jira-home-shared/* /srv/share/jira_cluster/jira-home-shared/
+    shell: cp -R -u -p /vagrant/data/jira-home-shared/* /srv/share/jira_cluster/jira-home-shared/
 
   - name: chown files
     shell: sudo chown -R jira:jira /srv/share/jira_cluster/*
