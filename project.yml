@@ -55,6 +55,7 @@
   - consul2
   become: True
   roles:
+    - docker
     - keepalived
     - haproxy
     - pgbouncer

@@ -1,6 +1,7 @@
+[Unit]
 Description=jiralb
-#After=network.target
-#After=docker.service
+After=network.target
+After=docker.service
 
 [Service]
 ExecStart=/opt/mount_glfs.sh 

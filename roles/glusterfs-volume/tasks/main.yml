@@ -66,11 +66,8 @@
       force: true
     run_once: true
 
-#  - name: start volume
-#    shell: gluster volume start jira_cluster
-
-#  - name: sent nfs on
-#    shell: gluster volume set jira_cluster nfs.disable off
+  - name: set timeout
+    shell: gluster volume set jira_cluster network.ping-timeout "2"
   when: inventory_hostname == "stor2"
 
 - name: configure folders

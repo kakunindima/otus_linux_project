@@ -1,43 +1,65 @@
 ---
 # tasks file for pgbouncer
-- name: install pgbouncer
-  yum:
-    name: pgbouncer
-    state: present
 
-- name: copy pgbouncer config
-  copy:
-    src: pgbouncer.ini
-    dest: /etc/pgbouncer/pgbouncer.ini
-
-- name: create auth dirr
+- name: create dirr for pgbouncer docker-compose
   file:
     state: directory
-    path: /opt/jira/
+    path: /opt/pgbouncer
 
-- name: create log dirr
-  file:
-    state: directory
-    path: /var/log/pgbouncer/
-
-- name: copy pgbouncer auth.txt
+- name: copy pgbouncer docker-compose
   copy:
-    src: auth.txt
-    dest: /opt/jira/auth.txt
-
-- name: copy journal_r_start.sh
-  copy:
-    src: pgbouncer_start.sh
-    dest: /opt/pgbouncer_start.sh
-    mode: a+x
+    src: docker-compose.yml
+    dest: /opt/pgbouncer/docker-compose.yml
 
 - name: copy service
   copy:
-    src: pgbouncer_start.service
-    dest: /etc/systemd/system/pgbouncer_start.service
+    src: pgbouncer.service
+    dest: /etc/systemd/system/pgbouncer.service
 
 - name: enable & start service
   systemd:
     state: started
     enabled: yes
-    name: pgbouncer_start
+    name: pgbouncer
+
+#- name: install pgbouncer
+#  yum:
+#    name: pgbouncer
+#    state: present
+
+#- name: copy pgbouncer config
+#  copy:
+#    src: pgbouncer.ini
+#    dest: /etc/pgbouncer/pgbouncer.ini
+
+#- name: create auth dirr
+#  file:
+#    state: directory
+#    path: /opt/jira/
+
+#- name: create log dirr
+#  file:
+#    state: directory
+#    path: /var/log/pgbouncer/
+
+#- name: copy pgbouncer auth.txt
+#  copy:
+#    src: auth.txt
+#    dest: /opt/jira/auth.txt
+
+#- name: copy journal_r_start.sh
+#  copy:
+#    src: pgbouncer_start.sh
+#    dest: /opt/pgbouncer_start.sh
+#    mode: a+x
+
+#- name: copy service
+#  copy:
+#    src: pgbouncer_start.service
+#    dest: /etc/systemd/system/pgbouncer_start.service
+
+#- name: enable & start service
+#  systemd:
+#    state: started
+#    enabled: yes
+#    name: pgbouncer_start

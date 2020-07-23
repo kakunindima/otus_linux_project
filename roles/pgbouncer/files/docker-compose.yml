@@ -1,0 +1,12 @@
+version: "3.2"
+services:
+  pgbouncer:
+    image: pengwinn/pgbouncer:latest
+    ports:
+      - 5432:5432
+    networks:
+      pgbouncer:
+
+networks:
+  pgbouncer:
+    driver: bridge
