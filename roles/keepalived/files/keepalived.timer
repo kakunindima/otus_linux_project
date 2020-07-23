@@ -1,5 +1,5 @@
 [Timer]
-OnBootSec=30
-Unit=keepalived.service
+OnBootSec=1min
+Unit=keepalived_restart.service
 [Install]
 WantedBy=multi-user.target

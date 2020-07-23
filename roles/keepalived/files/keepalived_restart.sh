@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo systemctl resttart keepalived
+sudo systemctl restart keepalived

@@ -20,16 +20,16 @@
     src: keepalived.timer
     dest: /usr/lib/systemd/system/keepalived.timer
 
-#- name: copy keepalived_restart.service
-#  copy:
-#    src: keepalived_restart.service
-#    dest: /usr/lib/systemd/system/keepalived_restart.service
+- name: copy keepalived_restart.service
+  copy:
+    src: keepalived_restart.service
+    dest: /usr/lib/systemd/system/keepalived_restart.service
 
-#- name: copy keepalived_restart.sh
-#  copy:
-#    src: keepalived_restart.sh
-#    dest: /opt/keepalived_restart.sh
-#    mode: a+x
+- name: copy keepalived_restart.sh
+  copy:
+    src: keepalived_restart.sh
+    dest: /opt/keepalived_restart.sh
+    mode: a+x
 
 - name: copy keepalived.conf
   template:
@@ -44,11 +44,11 @@
 - name: read sysctl.conf
   shell: sysctl -p
 
-#- name: start keepalived_restart.service
-#  systemd:
-#    name: keepalived_restart.service
-#    enabled: yes
-#    state: started
+- name: start keepalived_restart.service
+  systemd:
+    name: keepalived_restart.service
+    enabled: yes
+    state: started
 
 - name: start keepalived.timer
   systemd:

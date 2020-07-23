@@ -120,21 +120,6 @@ Vagrant.configure(2) do |config|
       stor2.vm.hostname = "stor2"
     end
 
-    config.vm.define "jiralb1" do |jiralb1|
-      jiralb1.vm.provider "virtualbox" do |v|
-        v.memory = 256
-      end
-      jiralb1.vm.network "private_network", ip: "10.0.0.4"
-      jiralb1.vm.hostname = "jiralb1"
-    end
-
-    config.vm.define "jiralb2" do |jiralb2|
-      jiralb2.vm.provider "virtualbox" do |v|
-        v.memory = 256
-      end
-      jiralb2.vm.network "private_network", ip: "10.0.0.5"
-      jiralb2.vm.hostname = "jiralb2"
-    end
 
     config.vm.define "jira1" do |jira1|
       jira1.vm.provider "virtualbox" do |v|
@@ -152,6 +137,21 @@ Vagrant.configure(2) do |config|
       jira2.vm.hostname = "jira2"
     end
 
+    config.vm.define "jiralb1" do |jiralb1|
+      jiralb1.vm.provider "virtualbox" do |v|
+        v.memory = 256
+      end
+      jiralb1.vm.network "private_network", ip: "10.0.0.4"
+      jiralb1.vm.hostname = "jiralb1"
+    end
+
+    config.vm.define "jiralb2" do |jiralb2|
+      jiralb2.vm.provider "virtualbox" do |v|
+        v.memory = 256
+      end
+      jiralb2.vm.network "private_network", ip: "10.0.0.5"
+      jiralb2.vm.hostname = "jiralb2"
+    end
 
     config.vm.provision "shell", inline: <<-SHELL
     mkdir -p ~root/.ssh

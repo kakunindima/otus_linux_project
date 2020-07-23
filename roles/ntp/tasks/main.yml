@@ -1,5 +1,10 @@
 ---
 # tasks file for ntp
+- name: install epel
+  yum:
+    name: epel-release
+    state: present
+
 - name: install ntp
   yum:
     name: ntp

@@ -71,5 +71,6 @@
   become: True
   roles:
     - journald_srv
-    - monitoring
+    - nagios
+#    - monitoring
     - borg-server
