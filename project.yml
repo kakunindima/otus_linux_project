@@ -3,6 +3,7 @@
   become: True
   roles:
     - ntp
+    - firewall
 
 - hosts: 
     - jiras
@@ -31,7 +32,6 @@
     - jira2
   become: True
   roles:
-#    - glusterfs_cli
     - jira
 
 - hosts: stors
@@ -39,7 +39,6 @@
   roles:
     - keepalived_stor
     - glusterfs-volume
-#    - smb
 
 - hosts:
     - db1
@@ -72,5 +71,4 @@
   roles:
     - journald_srv
     - nagios
-#    - monitoring
     - borg-server
