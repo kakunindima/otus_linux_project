@@ -1,9 +1,4 @@
 ---
-- name: install epel
-  yum:
-    name: epel-release
-    state: present
-
 - name: Install essential software
   yum:
     name:

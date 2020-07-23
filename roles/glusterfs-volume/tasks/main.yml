@@ -4,11 +4,6 @@
   user:
     name: jira
 
-- name: install epel
-  yum:
-    name: epel-release
-    state: present
-
 - name: install centos-release-gluster
   yum:
     name: centos-release-gluster

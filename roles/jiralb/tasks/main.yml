@@ -20,5 +20,3 @@
     name: jiralb
     state: started
     enabled: yes
-#- name: start docker-compose
-#  shell: docker-compose -f /opt/jiralb/docker-compose.yml up -d

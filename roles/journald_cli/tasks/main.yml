@@ -12,13 +12,11 @@
       template:
         src: journald.conf.j2
         dest: /etc/systemd/journald.conf
-#      notify: journald start
 
     - name: copy configs
       template:
         src: journal-upload.conf.j2
         dest: /etc/systemd/journal-upload.conf
-#      notify: journald_upload start
 
 - name: journald start
   systemd:

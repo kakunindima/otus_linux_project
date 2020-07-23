@@ -1,0 +1,6 @@
+---
+# tasks file for epel
+- name: install epel-release repo
+  yum:
+    name: epel-release
+    state: present

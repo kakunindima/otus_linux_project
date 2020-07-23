@@ -2,6 +2,7 @@
 - hosts: project
   become: True
   roles:
+    - epel
     - ntp
     - firewall
 

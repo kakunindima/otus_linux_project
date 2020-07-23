@@ -6,8 +6,10 @@
       - nagios
       - nagios-nrpe
     state: present
+
 - name: install plugins
   shell: yum install -y nagios-plugins-*
+
 - name: copy nagios.cfg
   copy:
     src: nagios.cfg
