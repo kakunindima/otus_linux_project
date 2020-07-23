@@ -1,2 +1,0 @@
-FROM edoburu/pgbouncer:1.11.0
-COPY pgbouncer.ini auth.txt /etc/pgbouncer/
