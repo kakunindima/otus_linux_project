@@ -48,7 +48,7 @@
   become: True
   roles:
     - patroni
-#    - db_jira_cluster
+    - db_jira_cluster
 
 - hosts:
   - consul1
