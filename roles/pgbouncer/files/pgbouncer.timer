@@ -1,0 +1,5 @@
+[Timer]
+OnBootSec=1min
+Unit=pgbouncer.service
+[Install]
+WantedBy=multi-user.target

@@ -4,7 +4,7 @@ After=docker.service
 
 [Service]
 ExecStart=/usr/local/bin/docker-compose -f /opt/pgbouncer/docker-compose.yml up 
-ExecStop=/usr/local/bin/docker-compose -f /opt/pgbouncer/docker-compose.yml stop
+ExecStop=/usr/local/bin/docker-compose -f /opt/pgbouncer/docker-compose.yml down
 
 [Install]
 WantedBy=multi-user.target

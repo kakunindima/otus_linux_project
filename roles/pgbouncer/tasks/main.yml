@@ -11,10 +11,21 @@
     src: docker-compose.yml
     dest: /opt/pgbouncer/docker-compose.yml
 
+- name: copy timer
+  copy:
+    src: pgbouncer.timer
+    dest: /etc/systemd/system/pgbouncer.timer
+
 - name: copy service
   copy:
     src: pgbouncer.service
     dest: /etc/systemd/system/pgbouncer.service
+
+- name: enable & start service
+  systemd:
+    state: started
+    enabled: yes
+    name: pgbouncer.timer
 
 - name: enable & start service
   systemd:
