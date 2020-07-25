@@ -36,12 +36,13 @@
     - name: fstab item
       lineinfile:
         path: /etc/fstab
-        line: stor:/jira_cluster /srv/share/jira_cluster/  glusterfs   _netdev 0 0 #//10.0.0.31/jira_cluster /srv/share/jira_cluster cifs username=jira,password=1,uid=0,gid=0,nounix,file_mode=0777,dir_mode=0777 0 0
+        line: stor:/jira_cluster /srv/share/jira_cluster/  glusterfs   _netdev 0 0
         state: present
 
     - name: add user jira
       user:
         name: jira
+        uid: 2001
 
     - name: create folder for mount
       file:
@@ -49,7 +50,7 @@
         state: directory
         owner: jira
         group: jira
-        mode: 0777
+        mode: 0755
 
 #    - name: mount folder
 #      shell: mount -a
