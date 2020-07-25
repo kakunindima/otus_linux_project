@@ -1,0 +1,5 @@
+[Timer]
+OnBootSec=30
+Unit=jrnl_u_start.service
+[Install]
+WantedBy=multi-user.target

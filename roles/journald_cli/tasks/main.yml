@@ -38,8 +38,19 @@
 
 - name: copy service
   copy: 
+    src: jrnl_upload.timer
+    dest: /etc/systemd/system/jrnl_upload.timer
+
+- name: copy service
+  copy: 
     src: jrnl_u_start.service
     dest: /etc/systemd/system/jrnl_u_start.service
+
+- name: jrnl_upload timer start
+  systemd:
+    name: jrnl_upload.timer
+    state: started
+    enabled: yes
 
 - name: jrnl_u start
   systemd:
