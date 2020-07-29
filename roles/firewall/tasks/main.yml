@@ -1,5 +1,10 @@
 ---
 # tasks file for firewall
+- name: install semanage
+  yum:
+    name: policycoreutils-python
+    state: present
+
 - name: set selinux
   shell: semanage fcontext -a -t net_conf_t /etc/sysconfig/network-scripts/ifcfg-eth1
 
@@ -80,7 +85,7 @@
 - name: add rules for consul1
   block:
     - name: add haproxy port && pgbouncer-docker && consul
-      shell: firewall-cmd --zone=public --add-port=8080/tcp --add-port=5432/tcp --add-port=8500/tcp --add-port=8600/tcp --add-port=8302/tcp --add-port=8302/udp --add-port=8600/udp --add-port=8301/udp  --add-port=8301/tcp --add-port=8300/tcp --permanent
+      shell: firewall-cmd --zone=public --add-port=15432/tcp --add-port=8080/tcp --add-port=5432/tcp --add-port=8500/tcp --add-port=8600/tcp --add-port=8302/tcp --add-port=8302/udp --add-port=8600/udp --add-port=8301/udp  --add-port=8301/tcp --add-port=8300/tcp --permanent
 
     - name: add masquerade to pgbouncer
       shell: firewall-cmd --add-masquerade
@@ -92,7 +97,7 @@
 - name: add rules for consul2
   block:
     - name: add haproxy port && pgbouncer-docker && consul
-      shell: firewall-cmd --zone=public --add-port=8080/tcp --add-port=5432/tcp --add-port=8500/tcp --add-port=8600/tcp --add-port=8302/tcp --add-port=8302/udp --add-port=8600/udp --add-port=8301/udp  --add-port=8301/tcp --add-port=8300/tcp --permanent
+      shell: firewall-cmd --zone=public --add-port=15432/tcp  --add-port=8080/tcp --add-port=5432/tcp --add-port=8500/tcp --add-port=8600/tcp --add-port=8302/tcp --add-port=8302/udp --add-port=8600/udp --add-port=8301/udp  --add-port=8301/tcp --add-port=8300/tcp --permanent
 
     - name: add masquerade to pgbouncer
       shell: firewall-cmd --add-masquerade

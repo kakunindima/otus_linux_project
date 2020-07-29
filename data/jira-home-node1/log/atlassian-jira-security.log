@@ -641,3 +641,18 @@
 2020-07-09 13:54:11,558 ContainerBackgroundProcessor[StandardEngine[Catalina]]      HttpSession [gn8mxd] destroyed for 'anonymous'
 2020-07-09 14:09:49,078 localhost-startStop-2      HttpSession [117wto1] destroyed for 'pengwinn'
 2020-07-09 14:09:49,094 localhost-startStop-2      HttpSession [6q4t6m] destroyed for 'pengwinn'
+2020-07-29 11:31:07,573+0000 localhost-startStop-1      Jira 8.11.0 build: 811001 started. You can now access Jira through your web browser.
+2020-07-29 11:35:47,851+0000 http-nio-8080-exec-7 anonymous 695x13x1 - 10.0.0.1,10.0.0.5 /login.jsp HttpSession created [c2mj5n]
+2020-07-29 11:36:27,532+0000 http-nio-8080-exec-4 anonymous 696x18x1 c2mj5n 10.0.0.1,10.0.0.5 /login.jsp HttpSession [c2mj5n] destroyed for 'anonymous'
+2020-07-29 11:36:27,603+0000 http-nio-8080-exec-4 anonymous 696x18x1 c2mj5n 10.0.0.1,10.0.0.5 /login.jsp HttpSession created [137csvd]
+2020-07-29 11:36:28,000+0000 http-nio-8080-exec-4 pengwinn 696x18x1 c2mj5n 10.0.0.1,10.0.0.5 /login.jsp The user 'pengwinn' has PASSED authentication.
+2020-07-29 11:39:23,975+0000 http-nio-8080-exec-5 anonymous 699x74x7 - 10.0.0.11,10.0.0.4 /rest/webResources/1.0/resources HttpSession created [1ojpd0]
+2020-07-29 11:39:24,020+0000 http-nio-8080-exec-5 pengwinn 699x74x7 1ojpd0 10.0.0.11,10.0.0.4 /rest/webResources/1.0/resources HttpSession [1ojpd0] destroyed for 'pengwinn'
+2020-07-29 11:41:14,058+0000 http-nio-8080-exec-9 pengwinn 701x85x8 137csvd 10.0.0.1,10.0.0.5 /secure/admin/WebSudoAuthenticate.jspa The user 'pengwinn' has PASSED authentication.
+2020-07-29 11:41:15,251+0000 http-nio-8080-exec-9 pengwinn 701x85x8 137csvd 10.0.0.1,10.0.0.5 /secure/admin/WebSudoAuthenticate.jspa HttpSession [137csvd] destroyed for 'pengwinn'
+2020-07-29 11:41:15,303+0000 http-nio-8080-exec-9 pengwinn 701x85x8 137csvd 10.0.0.1,10.0.0.5 /secure/admin/WebSudoAuthenticate.jspa HttpSession created [1bce74k]
+2020-07-29 11:45:08,869+0000 http-nio-8080-exec-9 anonymous 705x236x4 - 10.0.0.11,10.0.0.4 /rest/webResources/1.0/resources HttpSession created [1t1k5sr]
+2020-07-29 11:45:08,977+0000 http-nio-8080-exec-9 pengwinn 705x236x4 1t1k5sr 10.0.0.11,10.0.0.4 /rest/webResources/1.0/resources HttpSession [1t1k5sr] destroyed for 'pengwinn'
+2020-07-29 11:48:39,329+0000 http-nio-8080-exec-2 anonymous 708x267x4 - 10.0.0.11,10.0.0.4 /rest/webResources/1.0/resources HttpSession created [1y8k49s]
+2020-07-29 11:48:39,374+0000 http-nio-8080-exec-2 pengwinn 708x267x4 1y8k49s 10.0.0.11,10.0.0.4 /rest/webResources/1.0/resources HttpSession [1y8k49s] destroyed for 'pengwinn'
+2020-07-29 11:52:17,770+0000 localhost-startStop-2      HttpSession [1bce74k] destroyed for 'pengwinn'

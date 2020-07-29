@@ -1,6 +1,10 @@
 ---
 - name: configure db
   block:
+  - name: copy db dump
+    copy:
+      src: jira_db_dump.sql #jira_cluster.sql
+      dest: /opt/jira_cluster.sql
 
   - name: Create empty database jira_cluster_db
     postgresql_db:
@@ -9,16 +13,12 @@
       port: 15432
       login_password: postgres
 
-  - name: copy db dump
-    copy:
-      src: jira_cluster.sql
-      dest: /opt/jira_cluster.sql
-
   - name: Import db dump
     postgresql_db:
       name: jira_cluster_db
       state: restore
       target: /opt/jira_cluster.sql
       login_host: 10.0.0.20
+      port: 15432
       login_password: postgres
   when: inventory_hostname == "db2"

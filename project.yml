@@ -4,7 +4,7 @@
   roles:
     - epel
     - ntp
-    - firewall
+#    - firewall
 
 - hosts: 
     - jiras
