@@ -1,2 +1,150 @@
 ---
 # tasks file for firewall
+- name: set selinux
+  shell: semanage fcontext -a -t net_conf_t /etc/sysconfig/network-scripts/ifcfg-eth1
+
+- name: enable firewalld
+  systemd:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: add rules for jiralb1
+  block:
+    - name: add web port access to jiralb
+      shell: firewall-cmd --zone=public --add-port=80/tcp --permanent
+
+    - name: add masquerade to jiralb
+      shell: firewall-cmd --add-masquerade
+
+    - name: reload firewall
+      shell: firewall-cmd --reload
+  when: inventory_hostname == "jiralb1"
+
+- name: add rules for jiralb2
+  block:
+    - name: add web port access to jiralb
+      shell: firewall-cmd --zone=public --add-port=80/tcp --permanent
+
+    - name: add masquerade to jiralb
+      shell: firewall-cmd --add-masquerade
+
+    - name: reload firewall
+      shell: firewall-cmd --reload
+  when: inventory_hostname == "jiralb2"
+
+- name: add rules for jira1
+  block:
+    - name: add web port access to jiralb
+      shell: firewall-cmd --zone=public --add-port=8080/tcp --add-port=40001/tcp --permanent
+
+    - name: add masquerade to jira
+      shell: firewall-cmd --add-masquerade
+
+    - name: reload firewall
+      shell: firewall-cmd --reload
+  when: inventory_hostname == "jira1"
+
+- name: add rules for jira2
+  block:
+    - name: add web port access to jiralb
+      shell: firewall-cmd --zone=public --add-port=8080/tcp --add-port=40001/tcp --permanent
+
+    - name: add masquerade to jira
+      shell: firewall-cmd --add-masquerade
+
+    - name: reload firewall
+      shell: firewall-cmd --reload
+  when: inventory_hostname == "jira2"
+
+- name: add rules for stor1
+  block:
+    - name: add glusterfs port
+      shell: firewall-cmd --zone=public --add-service=nfs --add-service=samba --add-service=samba-client --permanent && firewall-cmd --zone=public --add-port=111/tcp --add-port=139/tcp --add-port=445/tcp --add-port=965/tcp --add-port=2049/tcp \
+             --add-port=38465-38469/tcp --add-port=631/tcp --add-port=111/udp --add-port=963/udp --add-port=24007-24009/tcp --add-port=49152-49251/tcp  --permanent
+
+    - name: reload firewall
+      shell: firewall-cmd --reload
+  when: inventory_hostname == "stor1"
+
+- name: add rules for stor2
+  block:
+    - name: add glusterfs port
+      shell: firewall-cmd --zone=public --add-service=nfs --add-service=samba --add-service=samba-client --permanent && firewall-cmd --zone=public --add-port=111/tcp --add-port=139/tcp --add-port=445/tcp --add-port=965/tcp --add-port=2049/tcp \
+             --add-port=38465-38469/tcp --add-port=631/tcp --add-port=111/udp --add-port=963/udp --add-port=24007-24009/tcp --add-port=49152-49251/tcp  --permanent
+
+    - name: reload firewall
+      shell: firewall-cmd --reload
+  when: inventory_hostname == "stor2"
+
+- name: add rules for consul1
+  block:
+    - name: add haproxy port && pgbouncer-docker && consul
+      shell: firewall-cmd --zone=public --add-port=8080/tcp --add-port=5432/tcp --add-port=8500/tcp --add-port=8600/tcp --add-port=8302/tcp --add-port=8302/udp --add-port=8600/udp --add-port=8301/udp  --add-port=8301/tcp --add-port=8300/tcp --permanent
+
+    - name: add masquerade to pgbouncer
+      shell: firewall-cmd --add-masquerade
+
+    - name: reload firewall
+      shell: firewall-cmd --reload
+  when: inventory_hostname == "consul1"
+
+- name: add rules for consul2
+  block:
+    - name: add haproxy port && pgbouncer-docker && consul
+      shell: firewall-cmd --zone=public --add-port=8080/tcp --add-port=5432/tcp --add-port=8500/tcp --add-port=8600/tcp --add-port=8302/tcp --add-port=8302/udp --add-port=8600/udp --add-port=8301/udp  --add-port=8301/tcp --add-port=8300/tcp --permanent
+
+    - name: add masquerade to pgbouncer
+      shell: firewall-cmd --add-masquerade
+
+    - name: reload firewall
+      shell: firewall-cmd --reload
+  when: inventory_hostname == "consul2"
+
+- name: add rules for consul3
+  block:
+    - name: add haproxy port && pgbouncer-docker && consul
+      shell: firewall-cmd --zone=public --add-port=8500/tcp --add-port=8600/tcp --add-port=8302/tcp --add-port=8302/udp --add-port=8600/udp --add-port=8301/udp  --add-port=8301/tcp --add-port=8300/tcp --permanent
+
+    - name: add masquerade to pgbouncer
+      shell: firewall-cmd --add-masquerade
+
+    - name: reload firewall
+      shell: firewall-cmd --reload
+  when: inventory_hostname == "consul3"
+
+- name: add rules for db1
+  block:
+    - name: add postgres port && patroni
+      shell: firewall-cmd --add-port=5432/tcp --add-port=8008-8010/tcp --add-port=4001/tcp --permanent
+
+    - name: reload firewall
+      shell: firewall-cmd --reload
+  when: inventory_hostname == "db1"
+
+- name: add rules for db1
+  block:
+    - name: add postgres port && patroni
+      shell: firewall-cmd --add-port=5432/tcp --add-port=8008-8010/tcp --add-port=4001/tcp --permanent
+
+    - name: reload firewall
+      shell: firewall-cmd --reload
+  when: inventory_hostname == "db2"
+
+- name: add rules for db1
+  block:
+    - name: add postgres port && patroni
+      shell: firewall-cmd --add-port=5432/tcp --add-port=8008-8010/tcp --add-port=4001/tcp --permanent
+
+    - name: reload firewall
+      shell: firewall-cmd --reload
+  when: inventory_hostname == "db3"
+
+- name: add rules for bml
+  block:
+    - name: add nagios & journal-remote port
+      shell: firewall-cmd --zone=public --add-port=80/tcp --add-port=19532/tcp --permanent
+
+    - name: reload firewall
+      shell: firewall-cmd --reload
+  when: inventory_hostname == "bml"

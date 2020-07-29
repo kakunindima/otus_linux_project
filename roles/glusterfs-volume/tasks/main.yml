@@ -3,6 +3,7 @@
 - name: add jira user
   user:
     name: jira
+    uid: 2001
 
 - name: install centos-release-gluster
   yum:
