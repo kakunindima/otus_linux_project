@@ -20,7 +20,7 @@ __Ноды на которых крутится loadbalancer на основе a
 
 ### Jira1,2
 
-__Ноды на которых в docker запущена jira, образ взят из официального docker репозитория [atlassian/jira](hub.docker.com/r/atlassian/jira-software) версии 8.4.0. конфигурация контейнера настроена через docker-compose и запущена внутри ноды как systemd service. Коннект к БД осуществляется на единый ip адресс 10.0.0.20, к каждая нода монтируется к storage также через единый ip адресс 10.0.0.30, сюда мапятся директории для контейнеров с jira - jira-home-node1, jira-home-node2, jira-home-shared.__
+__Ноды на которых в docker запущена jira, образ взят из официального docker репозитория [atlassian/jira](hub.docker.com/r/atlassian/jira-software) версии 8.11.0. конфигурация контейнера настроена через docker-compose и запущена внутри ноды как systemd service. Коннект к БД осуществляется на единый ip адресс 10.0.0.20, к каждая нода монтируется к storage также через единый ip адресс 10.0.0.30, сюда мапятся директории для контейнеров с jira - jira-home-node1, jira-home-node2, jira-home-shared.__
 
 ### Stor1,2
 
