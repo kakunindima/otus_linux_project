@@ -74,7 +74,7 @@ Vagrant.configure(2) do |config|
 
     config.vm.define "consul3" do |consul3|
       consul3.vm.provider "virtualbox" do |v|
-        v.memory = 256
+        v.memory = 128
       end
       consul3.vm.network "private_network", ip: "10.0.0.27"
       consul3.vm.hostname = "consul3"
@@ -96,13 +96,13 @@ Vagrant.configure(2) do |config|
       db2.vm.hostname = "db2"
     end
 
-    config.vm.define "db3" do |db3|
-      db3.vm.provider "virtualbox" do |v|
-        v.memory = 256
-      end
-      db3.vm.network "private_network", ip: "10.0.0.23"
-      db3.vm.hostname = "db3"
-    end
+#    config.vm.define "db3" do |db3|
+#      db3.vm.provider "virtualbox" do |v|
+#        v.memory = 256
+#      end
+#      db3.vm.network "private_network", ip: "10.0.0.23"
+#      db3.vm.hostname = "db3"
+#    end
 
     config.vm.define "stor1" do |stor1|
       stor1.vm.provider "virtualbox" do |v|
